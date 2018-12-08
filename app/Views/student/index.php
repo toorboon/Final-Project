@@ -130,7 +130,7 @@
 				<p>Course: FSWD60</p>
 				</div>
 				<div class="col-6">
-					<img src="..." alt="..." class="img-thumbnail rounded">
+					<img src="../../img/flower.jpg" alt="flower" class="img-thumbnail rounded">
 				</div>
 			</div>
 		</div>
