@@ -43,13 +43,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="profile.php">
-                  <span data-feather="home"></span>
-                  Profile
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="http://lms.codefactory.academy/login/index.php" target="_blank">
+                <a class="nav-link" href="#">
                   <span data-feather="file-text"></span>
                   Material
                 </a>

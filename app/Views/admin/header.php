@@ -32,26 +32,32 @@
             <ul class="nav flex-column pt-2">
               <li class="nav-item">
                 <a class="nav-link" href="index.php">
-                  <span data-feather="users"></span>
-                  Pair room<span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="history.php">
-                  <span data-feather="calendar"></span>
-                  History
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="profile.php">
                   <span data-feather="home"></span>
-                  Profile
+                  Home<span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="http://lms.codefactory.academy/login/index.php" target="_blank">
-                  <span data-feather="file-text"></span>
-                  Material
+                <a class="nav-link" href="course.php">
+                  <span data-feather="plus-circle"></span>
+                  Add Course
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="user.php">
+                  <span data-feather="plus-circle"></span>
+                  Add User
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="day.php">
+                  <span data-feather="plus-circle"></span>
+                  Add Day
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="exercise.php">
+                  <span data-feather="plus-circle"></span>
+                  Add Exercise
                 </a>
               </li>
             </ul>
