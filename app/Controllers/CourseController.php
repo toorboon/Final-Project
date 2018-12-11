@@ -1,18 +1,6 @@
-<?php 
+<?php
 
-include './Models/config.php';
-
-?>
-
-<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" accept-charset="utf-8">
-	<input type="number" name="teamsize" min="1" required>please choose Team size
-	
-	<button type="submit">submit</button>
-</form>
-
-
-
-<?php 
+require '../../Models/config.php';
 
 class Course extends Database {
 
@@ -31,7 +19,7 @@ class Course extends Database {
 
 		// Make sure teamsize is not greater than Number of available students
 		$teamsize = ($teamsize > $nrOfStudents) ? $nrOfStudents : $teamsize;
-		echo 'Number of students: '.$nrOfStudents.'<br>';
+		//echo 'Number of students: '.$nrOfStudents.'<br>';
 
 		$pairs = [];
 		// Create Pairs
@@ -64,8 +52,8 @@ class Course extends Database {
 		if ($nrOfStudents > 0) {
 			$count = $nrOfStudents;
 			$pairsCount = count($pairs);
-			echo 'Nr. of pairs: '.$pairsCount.'<br>';
-			echo 'Nr. of students left: '.$nrOfStudents.'<br>';
+			/*echo 'Nr. of pairs: '.$pairsCount.'<br>';
+			echo 'Nr. of students left: '.$nrOfStudents.'<br>';*/
 
 			for ($i=0; $i < $count ; $i++) { 
 				$j = $i % $pairsCount;
@@ -76,18 +64,18 @@ class Course extends Database {
 
 			}
 		}
-			echo '<hr>';
+			/*echo '<hr>';
 			echo '<p><u>Pairs</u></p><pre>';
 			print_r($pairs);
 			echo '</pre>';
-			echo '<br>';
+			echo '<br>';*/
 
-		// find leader for each pair
+		//find leader for each pair
 			for ($i=0; $i < count($pairs); $i++) { 
 				$leaderId = $this->findLeader($pairs[$i]);
-				echo 'leader id: '.$leaderId.'<br>';
+				//echo 'leader id: '.$leaderId.'<br>';
 				$key = array_search($leaderId, $pairs[$i]);
-				echo 'leader position: '.$key.'<br>';
+				//echo 'leader position: '.$key.'<br>';
 
 				if ($key != 0) {
 					$value = $pairs[$i][$key];
@@ -96,10 +84,12 @@ class Course extends Database {
 				}
 			}
 
-			echo '<p><u>Pairs</u></p><pre>';
+			/*echo '<p><u>Pairs</u></p><pre>';
 			print_r($pairs);
 			echo '</pre>';
-			echo '<br>';
+			echo '<br>';*/
+
+		return $pairs;
 	}
 
 	function getStudents($courseId) {
@@ -236,12 +226,4 @@ class Course extends Database {
 
 $course = new Course ();
 
-if (isset($_POST['teamsize'])){
-
-
-
-
-$course->pairGenerator($_POST['teamsize'],1);
-}
-
- ?>
+?>
