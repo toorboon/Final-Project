@@ -87,4 +87,5 @@ require_once "../../Controllers/CourseController.php"; ?>
 			
 	</main>
 
-<?php  include "footer.php"; ?>
+<?php  include "../footer/footer.php"; ?>
+<script type="text/javascript" src="../../js/calendar.js"></script>
