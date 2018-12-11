@@ -232,6 +232,14 @@ class Course extends Database {
 		$where = 'WHERE user_id = '.$userId;
 		return $this->read($table, $fields, $join,$where); 
 	}
+
+	function getStudentInfos ($courseId) {
+		$table = 'user';
+		$join = 'INNER JOIN enrollment e
+				 ON user.id = e.user_id';
+		$where = 'WHERE user.user_role_id = 2 AND e.course_id = '$courseId;
+		return $this->read($table, '*', $join, $where, '');
+	}
 }
 
 $course = new Course ();

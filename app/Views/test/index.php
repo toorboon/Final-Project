@@ -1,6 +1,6 @@
 <?php 
 
-include '../../Controllers/CourseController.php';
+require '../../Controllers/CourseController.php';
 
 
 echo "<pre>";
