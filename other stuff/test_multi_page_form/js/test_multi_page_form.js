@@ -2,14 +2,34 @@ $(document).ready(function(){
 
 //ON INIT
 	//Adds the submit action on the buttons for the forms and inserts the data to db
-	$('#register_course, #register_course_day, #register_course_exercise').on('submit',function(e){
-		insertData(e,$(this), $(document.activeElement).attr('name'))
+	$('#register_course, #register_course_day, #register_course_exercise, #register_user').on('submit',function(e){
+		
+		var indicator = $(document.activeElement).attr('name');
+		var form = $(this);
+		// console.log(indicator)
+		// console.log(form)
+		if (indicator == 'new_user'){
+
+			var password1 = $('input[name=password]').val();
+			var password2 = $('input[name=repeat_password]').val();
+			// console.log('inside new_user' + password1 + '  ' + password2)
+		
+			if (password1 != password2){
+				e.preventDefault();
+				alert('the passwords did not match');
+			} else {
+				insertData(e, form, indicator)
+			}
+		} else {
+			insertData(e, form, indicator)
+		}
+		// insertData(e, form, indicator)
 	});
 
 	/*//This is for testing purpose, if the correct id is saved on the thing
-	$('#course_days').on('change',function(){
+	$('#user_role').on('change',function(){
 		console.log($(document.activeElement).val())
-	});*/
+	})*/;
 
 	//Ajax Call for filling the Course Day+Tech fields
 	$('#real_course').on('change',function(){
@@ -103,6 +123,38 @@ $(document).ready(function(){
           }
 		});
 	});
+
+	//This populates the field "exercise_type" in the add new exercise form
+	$('#modal_user').on('shown.bs.modal', function (e) {
+
+  		category = 'fetch_user_role';
+  		
+  		$.ajax({
+          url:"action_handle_form.php",
+          method: "post",
+          data:{'category':category},
+          dataType:"text",
+          success:function(response)
+          {
+          	
+          	$('#user_role').html('<option value="" selected disabled>Choose User Role</option>');
+
+          	response = $.parseJSON(response);
+          	
+          	for(var i=0; i< response.length;i++){
+			// console.log(response[i].name)
+			// console.log(response[i].id)
+			// creates option tag
+  				jQuery('<option/>', {
+        			html: response[i].name,
+        			value: response[i].id
+        		}).appendTo('#user_role'); //appends to select if parent div has id dropdown
+			}
+          }
+		});
+	});
+
+
 
 	// $('input').on('input',function(){
 	// 	$(this).removeClass('invalid');
