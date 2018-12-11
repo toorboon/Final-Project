@@ -10,14 +10,16 @@ if (isset($_POST['category'])){
 	} else if ($category == 'new_course_exercise') {
 		insertCourseExerciseData();
 	} else if ($category == 'new_user') {
-		echo 'in new_user';
+		insertUserData();
 	} else if ($category == 'fetch_courses'){
 		fetchFormData($_POST['element']);
 	} else if ($category == 'fetch_course_days'){
 		fetchCourseDaysData($_POST['course_id']);
 	} else if ($category == 'fetch_exercise_type'){
 		fetchExerciseTypeData();
-	} 
+	} else if ($category == 'fetch_user_role'){
+		fetchUserRoleData();
+	}
 }
 
 function insertCourseData(){
@@ -68,7 +70,6 @@ function insertCourseDayData(){
 
 function insertCourseExerciseData(){
 	GLOBAL $obj;
-	
 	$fields_course_exercise = [
 		'course_day_id',
 		'exercise_type_id',
@@ -86,6 +87,38 @@ function insertCourseExerciseData(){
 	$obj -> insert('course_exercises', $fields_course_exercise, $values_course_exercise);
 	
 	return true;
+}
+
+function insertUserData(){
+	GLOBAL $obj;
+
+	$hashedPwd = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+	$fields_user = [
+		'fname',
+		'lname',
+		'username',
+		'password',
+		'email',
+		'github',
+		'info',
+		'user_role_id'
+	];
+
+	$values_user = [
+		$_POST['fname'],
+		$_POST['lname'],
+		$_POST['username'],
+		$hashedPwd,
+		$_POST['email'],
+		$_POST['github'],
+		$_POST['info_field'],
+		$_POST['user_role']
+	];
+
+	$obj -> insert('user', $fields_user, $values_user);
+	
+	return $obj;
 }
 
 function fetchFormData($element){
@@ -117,5 +150,18 @@ function fetchExerciseTypeData(){
 	echo json_encode($temp);
 	
 	return true;
+}
+
+function fetchUserRoleData(){
+	GLOBAL $obj;
+	// echo 'in fetch user';
+
+	$fields = ['id', 'description as name'];
+	$temp = $obj -> read('user_role', $fields);
+	
+	echo json_encode($temp);
+	
+	return true;
+
 }
 ?>
