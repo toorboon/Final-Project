@@ -62,4 +62,4 @@ require_once "../../Controllers/CourseController.php";
 		</div>
 	</main>
 
-<?php  include "footer.php"; ?>
+<?php  include "../footer/footer.php"; ?>
