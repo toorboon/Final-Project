@@ -1,6 +1,6 @@
-<!-- Modal for the course_day_form -->
+<!-- Modal for the user form -->
 
-    <div class="modal fade" tabindex="-1" id="modal_course_day" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" tabindex="-1" id="modal_user" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -54,4 +54,3 @@
     </div>
   </div>
 </div>
-

@@ -14,9 +14,12 @@
  <body>
 
 <?php
+
 include("course_day_form.php");
 include("course_form.php");
 include("course_exercises.php");
+include("user_form.php");
+
 ?>
 
     <a class="btn btn-primary m-2" data-toggle="modal" data-target="#modal_course">New Course</a>
@@ -24,6 +27,8 @@ include("course_exercises.php");
     <a class="btn btn-primary m-2" data-toggle="modal" data-target="#modal_course_day">New Course Day</a>
 
     <a class="btn btn-primary m-2" data-toggle="modal" data-target="#modal_course_exercise">New Exercises</a>
+
+    <a class="btn btn-primary m-2" data-toggle="modal" data-target="#modal_user">New User</a>
 
  </body>   
  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
