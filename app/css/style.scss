@@ -1,7 +1,7 @@
 
 //styling for cicular progress bars
 $borderWidth: 7px;
-$animationTime: 1.5s;
+$animationTime: 0.5s;
 $border-color-default: #eee;
 $border-color-fill: #1E90FF;
 $size: 150px;
@@ -142,7 +142,7 @@ Due to the split circle of progress-left and progress right, we must use the ani
 		margin-bottom: 1em;
 	}
 
-.profile {
-  background-color: #92a8d1;
+.profile, .card {
+  border: 2px solid #92a8d1;
   border-radius: 20px;
 }
