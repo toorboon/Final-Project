@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-require_once 'db_connect.php';
+require_once '../../../Models/config.php';
 
 $error = false;
 
@@ -36,7 +36,7 @@ if( isset($_POST['btn-login']) ) {
   // $password = hash('sha256', $pass); // password hashing
   // It doesn't work with existing passwords in database because they weren't created with hashing
 
-  $res=mysqli_query($connect, "SELECT * FROM user WHERE email='$email'");
+  $res=mysqli_query($this->connection, "SELECT * FROM user WHERE email='$email'");
   $row=mysqli_fetch_array($res, MYSQLI_ASSOC);
   $count = mysqli_num_rows($res); // if uname/pass is correct it returns must be 1 row
   
