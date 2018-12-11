@@ -1,6 +1,8 @@
-<?php  include "header.php"; ?>
+<?php  include "header.php"; 
+require_once "../../Controllers/CourseController.php"; ?>
 
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Your Progress</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
@@ -208,7 +210,7 @@
 					<li>Advanced</li>
 					<li>Challenge</li>
 				</ul>
-				<p>Pair partner:</p>
+				<p>Pair partner: </p>
 				<p>GitHub Name: </p>		
 		</div>
 
@@ -216,27 +218,29 @@
 
 			<h4 class="mt-2">Exercises</h4>
 
-			<p class="mt-2">Type:</p>
-				<div class="form-check">
-				  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-				  <label class="form-check-label" for="defaultCheck1">
-				    Exercise 1
-				  </label>
-				</div>
-				<div class="form-check">
-				  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-				  <label class="form-check-label" for="defaultCheck1">
-				    Exercise 2
-				  </label>
-				</div>
-				<div class="form-check">
-				  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-				  <label class="form-check-label" for="defaultCheck1">
-				    Exercise 3
-				  </label>
-				</div>
+			<?php 
+			$table = 'course_exercises ce';
+			$fields = 'et.option_label as type, task_name, short_description';
+			$join = 'INNER JOIN exercise_type et ON ce.exercise_type_id = et.id';
+			$where = 'WHERE course_day_id = 1';
+			$orderby = 'ORDER BY ce.order_nr';
+				$result = $obj->read($table, $fields, $join, $where);
+
+				foreach($result as $value) { 
+					$test = (isset($test)) ? $test : '';
+					if ($test != $value['type']){ ?>
+					<p class="mt-2">Type: <?php echo $test = $value['type']; ?></p> <?php } ?>
+					<div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+					  <label class="form-check-label" for="defaultCheck1">
+					    <?php echo $value['task_name'] ?>
+					  </label>
+					  <p>Description: <?php echo $value['short_description'] ?></p>
+					</div>
+				<?php } ?>
+			
 		</div>
 	</div>
 </main>
 
-<?php  include "footer.php"; ?>
+<?php include "footer.php"; ?>
