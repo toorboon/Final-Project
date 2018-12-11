@@ -1,9 +1,9 @@
 <?php
-ob_start();
-session_start();
-require_once '../../../Models/config.php';
+
+require_once '../../Models/config.php';
 
 $error = false;
+
 
 if( isset($_POST['btn-login']) ) {
 
@@ -32,34 +32,36 @@ if( isset($_POST['btn-login']) ) {
 
  // if there's no error, continue to login
  if (!$error) {
+    $table = "user";
+    $fields = '*';
+    $condition = "WHERE email = '".$email."'";
+    $row = $obj->read($table,$fields='*',$condition);
   
   // $password = hash('sha256', $pass); // password hashing
   // It doesn't work with existing passwords in database because they weren't created with hashing
 
-  $res=mysqli_query($this->connection, "SELECT * FROM user WHERE email='$email'");
-  $row=mysqli_fetch_array($res, MYSQLI_ASSOC);
-  $count = mysqli_num_rows($res); // if uname/pass is correct it returns must be 1 row
+  // if uname/pass is correct it returns must be 1 row
   
-  if( $count == 1 && $row['password']==$pass && $row['user_role_id']==2 ) {
-   $_SESSION['student'] = $row['id'];
-   $_SESSION['urole'] = $row['user_role_id'];
-   $_SESSION['name'] = $row['fname'];
-   header("Location: ../../Views/student/index.php");
-
-  } elseif( $count == 1 && $row['password']==$pass && $row['user_role_id']==3 ) {
-   $_SESSION['trainer'] = $row['id'];
-   $_SESSION['urole'] = $row['user_role_id'];
-   $_SESSION['name'] = $row['fname'];
-   header("Location: ../../Views/trainer/index.php");
-
-  } elseif( $count == 1 && $row['password']==$pass && $row['user_role_id']==4 ) {
-   $_SESSION['admin'] = $row['id'];
-   $_SESSION['urole'] = $row['user_role_id'];
-   $_SESSION['name'] = $row['fname'];
-   header("Location: ../../Views/admin/index.php");
-
-  } else {
-   $errMSG = "Incorrect Credentials, Try again...";
+  if ( $row != [] && $pass =  $row[0]['password'] ) { //password_verify($pass, $row[0]['password'])
+        $_SESSION['name'] = $row[0]['fname'];
+        $_SESSION['urole'] = $row[0]['user_role_id'];
+        if ( $row[0]['user_role_id'] == 2) {
+          $_SESSION['student'] = $row[0]['id'];
+          header("Location: ../student/index.php");
+          exit;
+        } elseif ( $row[0]['user_role_id'] == 3){
+          $_SESSION['trainer'] = $row[0]['id'];
+          header("Location: ../trainer/index.php");
+          exit;
+        } elseif ( $row[0]['user_role_id'] == 4){
+          $_SESSION['admin'] = $row[0]['id'];
+          header("Location: ../admin/index.php");
+          exit;
+    } else {
+        $errMSG = "Incorrect Credentials, Try again...";
+        header("Location: index.php?email=".$email."&error=".$errMSG);
+        exit;
+    }
   }
   
  }

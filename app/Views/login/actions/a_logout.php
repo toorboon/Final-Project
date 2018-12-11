@@ -1,16 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION['user'])) {
- header("Location: ../login.php");
-} else if(isset($_SESSION['user'])!="") {
- header("Location: # ");
-}
 
-if (isset($_GET['logout'])) {
- unset($_SESSION['user']);
+ unset($_SESSION);
  session_unset();
  session_destroy();
  header("Location: ../login.php");
  exit;
-}
 ?>

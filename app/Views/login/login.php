@@ -1,22 +1,26 @@
-<?php 	include ('actions/db_connect.php');
+<?php
+		ob_start();
+		session_start();
+
 		include ('actions/a_login.php');
 
 		//it will never let you open login page if session is set, redirection is based on user_role_id
 
 		if ( isset($_SESSION['student'])!="" ) {
- 		header("Location: ../../Views/student/index.php");
+ 		header("Location: ../student/index.php");
  		exit;
 		}
 
 		if ( isset($_SESSION['trainer'])!="") {
-  		header("Location: ../../Views/trainer/index.php");
+  		header("Location: ../trainer/index.php");
   		exit;
   		}
   
   		if ( isset($_SESSION['admin'])!="") {
-  		header("Location: ../../Views/admin/index.php");
+  		header("Location: ../admin/index.php");
   		exit;
   		}
+		
 ?>
 
 <!DOCTYPE html>
@@ -42,14 +46,14 @@
              
   	<div class="form-group">
    	 <label for="email">Email address</label>
-   	 <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" value="<?php echo $email; ?>" maxlength="40" />
-   	 <span class="text-danger"><?php echo $emailError; ?></span>
+   	 <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" value="<?php if (isset($email)){echo $email;} ?>" maxlength="40" />
+   	 <span class="text-danger"><?php if (isset($emailError)){echo $emailError;}?></span>
   	</div>
  	 
  	<div class="form-group">
    	 <label for="password">Password</label>
    	 <input type="password" name="pass" class="form-control" id="password" placeholder="Your Password">
-   	 <span class="text-danger"><?php echo $passError; ?></span>
+   	 <span class="text-danger"><?php if (isset($passError)){echo $passError;} ?></span>
  	</div>
 
   	<button type="submit" name="btn-login" class="btn btn-primary">Sign In</button>
