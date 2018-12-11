@@ -1,51 +1,51 @@
-<?php  include "header.php"; ?>
+<?php  include "header.php"; 
+require_once "../../Controllers/CourseController.php"; ?>
 
-	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-		<div class="row">
-			<div class="col-12">
-				<p class="p-2 m-3">        
-				<?php 
-			    echo "<strong>" . date("l") . ", ";
-			    echo date("d-m-Y") . "</strong><br>";
-				?>	
-				</p>
-			</div>
-			
-			<div class="col-md-6 col-sm-12">
+	<main role="main" class="col-lg-10 col-md-10 ml-sm-auto px-4">
+		<div class="container">
+			<p class="p-2 m-3">        
+			<?php 
+			echo "<strong>" . date("l") . ", ";
+			echo date("d-m-Y") . "</strong><br>";
+			?>
+			</p>
+
+			<div class="col-lg-7 col-md-7 col-sm-12">
 				<h4 class="text-center m-2">User</h4>
 				<table class="table table-striped">
 				  <thead class="bg-primary">
 				    <tr>
 				      <th scope="col">ID</th>
-				      <th scope="col">First Name</th>
-				      <th scope="col">Last Name</th>
+				      <th scope="col">Name</th>
+				      <th scope="col">Email</th>
+				      <th scope="col">GitHub</th>
 				      <th scope="col">Role</th>
+				      <th></th>
+				      <th></th>
 				    </tr>
 				  </thead>
 				  <tbody>
+				  <?php
+				  $table = 'user';
+				  $result = $obj->read($table);
+
+				  foreach ($result as $value) {
+				  ?>
 				    <tr>
-				      <th scope="row">1</th>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>student</td>
+				      <th scope="row"><?php echo $value['id'] ?></th>
+				      <td><?php echo $value['fname']. ' ' .$value['lname'] ?></td>
+				      <td><?php echo $value['email'] ?></td>
+				      <td><?php echo $value['github'] ?></td>
+				      <td><?php echo $value['user_role_id'] ?></td>
+				      <td><button type="button" class="btn btn-success btn-sm">Update</button></td>
+				      <td><button type="button" class="btn btn-danger btn-sm">Delete</button></td>
 				    </tr>
-				    <tr>
-				      <th scope="row">2</th>
-				      <td>Jacob</td>
-				      <td>Thornton</td>
-				      <td>student</td>
-				    </tr>
-				    <tr>
-				      <th scope="row">3</th>
-				      <td>Larry</td>
-				      <td>the Bird</td>
-				      <td>trainer</td>
-				    </tr>
+				<?php } ?>
 				  </tbody>
 				</table>
 			</div>
 
-			<div class="col-md-6 col-sm-12">
+			<div class="col-lg-5 col-md-5 col-sm-12">
 				<h4 class="text-center m-2">Course</h4>
 				<table class="table table-striped">
 				  <thead class="bg-primary">
@@ -54,27 +54,26 @@
 				      <th scope="col">Name</th>
 				      <th scope="col">Start Date</th>
 				      <th scope="col">End Date</th>
+				      <th></th>
+				      <th></th>
 				    </tr>
 				  </thead>
 				  <tbody>
+				  	<?php
+					  $table = 'course';
+					  $result = $obj->read($table);
+
+					  foreach ($result as $value) {
+					?>
 				    <tr>
-				      <th scope="row">1</th>
-				      <td>FSWD60</td>
-				      <td></td>
-				      <td></td>
+				      <th scope="row"><?php echo $value['id'] ?></th>
+				      <td><?php echo $value['name'] ?></td>
+				      <td><?php echo $value['startdate'] ?></td>
+				      <td><?php echo $value['enddate'] ?></td>
+				      <td><button type="button" class="btn btn-success btn-sm">Update</button></td>
+				      <td><button type="button" class="btn btn-danger btn-sm">Delete</button></td>
 				    </tr>
-				    <tr>
-				      <th scope="row">2</th>
-				      <td>Python</td>
-				      <td></td>
-				      <td></td>
-				    </tr>
-				    <tr>
-				      <th scope="row">3</th>
-				      <td>Data Analysis</td>
-				      <td></td>
-				      <td></td>
-				    </tr>
+				    <?php } ?>
 				  </tbody>
 				</table>
 			</div>
@@ -84,7 +83,8 @@
 			<h4 class="text-center m-2">Calendar</h4>
 			<div id="show_calendar">&nbsp;</div>
 			<div id="current_month">&nbsp;</div>
-		</div>	
+		</div>
+			
 	</main>
 
 <?php  include "footer.php"; ?>

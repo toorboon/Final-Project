@@ -227,7 +227,7 @@ class Course extends Database {
 		$table = 'user';
 		$join = 'INNER JOIN enrollment e
 				 ON user.id = e.user_id';
-		$where = 'WHERE user.user_role_id = 2 AND e.course_id = '$courseId;
+		$where = 'WHERE user.user_role_id = 2 AND e.course_id = '.$courseId;
 		return $this->read($table, '*', $join, $where, '');
 	}
 }

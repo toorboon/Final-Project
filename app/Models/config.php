@@ -17,7 +17,7 @@ class Database {
 			echo "Debugging errno: " . mysqli_connect_errno() ."<br>";
 			echo "Debugging error: " . mysqli_connect_error();
 		} else {
-			echo "Success: Connection to database was established! <br>";
+			echo 
 			echo "Host information: " . mysqli_get_host_info($this->connection);
 		}*/
 	}
