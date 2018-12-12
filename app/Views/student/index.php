@@ -1,7 +1,41 @@
 <?php  include "header.php"; 
+	session_start();
 require_once "../../Controllers/CourseController.php"; ?>
 
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+	<?php  
+	// Get all courses where trainer with ID = 32 is enrolled
+		$login_userid = $_SESSION['student'];
+		$courses = $course->getCourses($login_userid);
+	?>
+	
+	<div class="row">
+		<div class="col-6">
+			<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="inputGroupCourse">Course</label>
+			  </div>
+			  <select id="inputGroupCourse" class="custom-select">
+			    <option selected disabled>Choose...</option>
+			    <?php foreach ($courses as $value) { ?>
+			    <option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
+			    <?php } ?>
+			  </select>
+			</div>
+		</div>
+
+		<div class="col-6">
+			<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="inputGroupCourseDay">Course Day</label>
+			  </div>
+			  <select id="inputGroupCourseDay" class="custom-select">
+			    <option selected>Choose Course first</option>
+			  </select>
+			</div>
+		</div>
+	</div>
 
            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Your Progress</h1>
@@ -202,16 +236,12 @@ require_once "../../Controllers/CourseController.php"; ?>
 			?>	
 			</p>
 
-				<p>Technology:</p>
-				<p>Exercises:</p>
-				<ul>
-					<li>Basic</li>
-					<li>Intermediate</li>
-					<li>Advanced</li>
-					<li>Challenge</li>
-				</ul>
-				<p>Pair partner: </p>
-				<p>GitHub Name: </p>		
+				<p id="tech_name">Technology:</p>
+				
+				<p>Pair partner: 
+					<div id="pair_partners"></div>
+				</p>
+				<p id='github_name'>GitHub Name: </p>		
 		</div>
 
 		<div class="col-md-5 col-sm-12 profile m-3">
@@ -242,5 +272,80 @@ require_once "../../Controllers/CourseController.php"; ?>
 		</div>
 	</div>
 </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	//change this to php!!!
+	//nachdem auf course day gewählt---> Ajax Abfrae, prüfen, gibt es Paare für diesen Tag? Falls ja, gib mir die Infos dazu (zwei Felder) und drucke es
 
+	$('#inputGroupCourse').on('change',function(){
+		getCourseday($(this).val());
+		course = $('#inputGroupCourse option:selected').text();
+
+	});
+
+	$('#inputGroupCourseDay').on('change',function(){
+		console.log(course)
+		var course_day = $('#inputGroupCourseDay option:selected').text();
+		$('#tech_name').html('Technology: ' + course_day)
+
+		getPair($(this).val(), <?php echo $login_userid; ?>, course_day, course);
+		
+	});
+
+	function getPair(courseDayId, userId, courseDay, course){
+
+		$.ajax({
+		url:"../../Controllers/action_course.php",
+          method: "post",
+          data:{'category':'fetch_pairs', 'courseDayId':courseDayId, 'userId': userId},
+          dataType:"text",
+          success:function(response)
+          {
+          	var response = $.parseJSON(response);
+          	content = '';
+          	user_lnames = '';
+
+          	for (var i = 0; i< response.length; i++){
+          		if (i == 0){
+          			content += '<p><b>' + response[i].fname +' ' + response[i].lname + '</b></p>';
+          			user_lnames += response[i].lname;
+          		} else {
+          		content += '<p>' + response[i].fname +' ' + response[i].lname + '</p>';
+          		user_lnames += '-' + response[i].lname;
+          		}
+          	}
+			$('#pair_partners').html(content);
+			$('#github_name').html('Github: <br>' + course + '-' + courseDay + '-' + user_lnames)
+			// course+course_day+lname1+lname2
+          }//FSWD60 -GIT_DAY 1Waything-Kear-O'Fearguise
+		});
+
+	}
+
+	function getCourseday(courseId) {
+		$.ajax({
+          url:"../../Controllers/action_course.php",
+          method: "post",
+          data:{'category':'fetch_course_days', 'course_id':courseId, 'userId':<?php echo $_SESSION['student']; ?>},
+          dataType:"text",
+          success:function(response)
+          {
+          	$('#inputGroupCourseDay').html('<option value="" selected disabled>Choose...</option>');
+
+          	var response = $.parseJSON(response);
+          	
+          	for(var i=0; i< response.length;i++){
+			// creates option tag
+  				$('<option/>', {
+        			html: response[i].name,
+        			value: response[i].id
+        		}).appendTo('#inputGroupCourseDay'); //appends to select if parent div has id dropdown
+			}
+          }
+		});
+	}
+
+}); //end of document.ready function
+</script>
 <?php include "../footer/footer.php"; ?>
