@@ -20,6 +20,8 @@ if (isset($_POST['category'])){
 		fetchExerciseTypeData();
 	} else if ($category == 'fetch_user_role'){
 		fetchUserRoleData();
+	} elseif ($category == 'fetch_course_day_pairs') {
+		fetchCourseDayPairs($_POST['course_day_id']);
 	}
 }
 
@@ -163,6 +165,21 @@ function fetchUserRoleData(){
 	echo json_encode($temp);
 	
 	return true;
+}
 
+function fetchCourseDayPairs($courseDayId){
+	GLOBAL $obj;
+	$table = 'pair_partner';
+	$fields = 'pair_id, user_id, CONCAT(user.fname," ",user.lname) as name';
+	$join = 'INNER JOIN pair
+			 ON pair.id = pair_partner.pair_id
+			 INNER JOIN user
+			 ON user.id = user_id';
+	$where = 'WHERE course_day_id = '.$courseDayId;
+	$temp = $obj -> read($table, $fields, $join, $where);
+	
+	echo json_encode($temp);
+	
+	return true;
 }
 ?>
