@@ -26,8 +26,14 @@ if (isset($_POST['category'])){
 
 	} elseif ($category == 'fetch_course_day_pairs') {
 		fetchCourseDayPairs($_POST['course_day_id']);
-
+	} elseif ($category == 'fetch_exercises'){
+		fetchExercises($_POST['pairId'], $_POST['courseDayId']);
+	} elseif ($category == 'insert_pair_exercise'){
+		insertPairExercise();
+	} elseif ($category == 'delete_pair_exercise'){
+		deletePairExercise();
 	}
+	 
 }
 
 function insertCourseData(){
@@ -124,9 +130,28 @@ function insertUserData(){
 		$_POST['user_role']
 	];
 
-	$obj -> insert('user', $fields_user, $values_user);
+	$temp = $obj -> insert('user', $fields_user, $values_user);
 	
-	return $obj;
+	echo json_encode($temp);
+
+	return true;
+}
+
+function insertPairExercise(){
+	GLOBAL $obj;
+	$fields = [
+		'pair_id',
+		'course_exercise_id',
+	];
+
+	$values =[
+		$_POST['pair_id'],
+		$_POST['ce_id'],	
+	];
+
+	$obj -> insert('pair_exercises_history', $fields, $values);
+
+	return true;
 }
 
 function fetchFormData($element){
@@ -182,7 +207,7 @@ function fetchUserRoleData(){
 
 function fetchPairs($courseDayId, $userId){
 	GLOBAL $obj;
-	$fields = ['fname', 'lname'];
+	$fields = ['fname', 'lname', 'pair_partner.pair_id'];
 	$join = 'INNER JOIN user ON user.id = pair_partner.user_id';
 	$where = 'WHERE pair_partner.pair_id = (SELECT pair.id FROM pair INNER JOIN pair_partner ON pair.id = pair_partner.pair_id WHERE pair_partner.user_id = '.$userId.' AND pair.course_day_id = '.$courseDayId.')';
 
@@ -207,6 +232,34 @@ function fetchCourseDayPairs($courseDayId){
 	
 	echo json_encode($temp);
 	
+	return true;
+}
+
+function fetchExercises($pairId, $courseDayId){
+	GLOBAL $obj;
+	$table = 'course_exercises ce';
+	$fields = 'et.option_label as type, task_name, short_description, ce.id, count(peh.id) as checked';
+	$join = 'INNER JOIN exercise_type et ON ce.exercise_type_id = et.id 
+			 LEFT JOIN pair_exercises_history peh
+			 ON peh.course_exercise_id = ce.id';
+	$where = 'WHERE course_day_id = '.$courseDayId.' GROUP BY ce.id';
+	$orderby = 'ORDER BY ce.exercise_type_id asc, ce.order_nr, ce.id asc';
+	$temp = $obj->read($table, $fields, $join, $where, $orderby);
+
+	echo json_encode($temp);
+	
+	return true;
+}
+
+function deletePairExercise(){
+	GLOBAL $obj;
+	$condition = [];
+	$condition['pair_id'] = $_POST['pair_id'];
+	$condition['course_exercise_id'] = $_POST['ce_id'];
+
+
+	$obj -> delete('pair_exercises_history', $condition);
+
 	return true;
 }
 ?>
