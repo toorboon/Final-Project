@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../Models/config.php';
+require_once 'Models/config.php';
 
 $error = false;
 
@@ -47,15 +47,15 @@ if( isset($_POST['btn-login']) ) {
         $_SESSION['urole'] = $row[0]['user_role_id'];
         if ( $row[0]['user_role_id'] == 2) {
           $_SESSION['student'] = $row[0]['id'];
-          header("Location: ../student/index.php");
+          header("Location: Views/student/student.php");
           exit;
         } elseif ( $row[0]['user_role_id'] == 3){
           $_SESSION['trainer'] = $row[0]['id'];
-          header("Location: ../trainer/index.php");
+          header("Location: Views/trainer/trainer.php");
           exit;
         } elseif ( $row[0]['user_role_id'] == 4){
           $_SESSION['admin'] = $row[0]['id'];
-          header("Location: ../admin/index.php");
+          header("Location: Views/admin/admin.php");
           exit;
     } else {
         $errMSG = "Incorrect Credentials, Try again...";

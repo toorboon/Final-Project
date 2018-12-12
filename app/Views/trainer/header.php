@@ -20,7 +20,7 @@
       <input class="form-control form-control-dark w-50 m-2" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="../login/actions/a_logout.php?logout">Sign out</a>
+          <a class="nav-link" href="../login/a_logout.php?logout">Sign out</a>
         </li>
       </ul>
     </nav>
