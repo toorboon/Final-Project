@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -17,8 +18,9 @@
 
   <body>
     <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"></a>
-      <input class="form-control form-control-dark w-50 m-2" type="text" placeholder="Search" aria-label="Search">
+      <?php 
+      echo "<p class='m-3 text-white'>Welcome " .$_SESSION['name']. " !</p>";
+      ?>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="../login/a_logout.php?logout">Sign out</a>
