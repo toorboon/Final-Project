@@ -12,12 +12,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
   <body>
     <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"></a>
-      <input class="form-control form-control-dark w-50 m-2" type="text" placeholder="Search" aria-label="Search">
+       <?php 
+        session_start();
+        echo "<p class='mt-3 text-white'>Welcome " .$_SESSION['name']. " !</p>"; 
+        ?>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="../login/a_logout.php?logout">Sign out</a>
@@ -31,7 +35,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column pt-2">
               <li class="nav-item">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="student.php">
                   <span data-feather="users"></span>
                   Pair room<span class="sr-only">(current)</span>
                 </a>

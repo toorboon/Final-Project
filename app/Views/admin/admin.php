@@ -27,7 +27,7 @@ ob_end_flush();
 				<table class="table table-striped">
 				  <thead class="bg-primary">
 				    <tr>
-				      <th scope="col">ID</th>
+				      <th scope="col">Description</th>
 				      <th scope="col">Name</th>
 				      <th scope="col">Email</th>
 				      <th scope="col">GitHub</th>
@@ -39,12 +39,14 @@ ob_end_flush();
 				  <tbody>
 				  <?php
 				  $table = 'user';
-				  $result = $obj->read($table);
+				  $join = ' LEFT JOIN user_role 
+				  ON user.user_role_id = user_role.id';
+				  $result = $obj->read($table,"*", $join);
 
 				  foreach ($result as $value) {
 				  ?>
 				    <tr>
-				      <th scope="row"><?php echo $value['id'] ?></th>
+				      <th scope="row"><?php echo $value['description'] ?></th>
 				      <td><?php echo $value['fname']. ' ' .$value['lname'] ?></td>
 				      <td><?php echo $value['email'] ?></td>
 				      <td><?php echo $value['github'] ?></td>
