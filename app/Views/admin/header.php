@@ -12,9 +12,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
   </head>
 
   <body>
+    <?php
+
+    include("inc/course_day.php");
+    include("inc/course.php");
+    include("inc/course_ex.php");
+    include("inc/user.php");
+
+    ?>
     <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"></a>
       <input class="form-control form-control-dark w-50 m-2" type="text" placeholder="Search" aria-label="Search">
@@ -37,25 +47,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="course.php">
+                <a class="nav-link" data-toggle="modal" data-target="#modal_course">
                   <span data-feather="plus-circle"></span>
                   Add Course
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="user.php">
+                <a class="nav-link" data-toggle="modal" data-target="#modal_user">
                   <span data-feather="plus-circle"></span>
                   Add User
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="day.php">
+                <a class="nav-link" data-toggle="modal" data-target="#modal_course_day">
                   <span data-feather="plus-circle"></span>
                   Add Day
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="exercise.php">
+                <a class="nav-link" data-toggle="modal" data-target="#modal_course_exercise">
                   <span data-feather="plus-circle"></span>
                   Add Exercise
                 </a>

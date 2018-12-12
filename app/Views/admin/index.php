@@ -88,4 +88,7 @@ require_once "../../Controllers/CourseController.php"; ?>
 	</main>
 
 <?php  include "../footer/footer.php"; ?>
+<!-- necessary for the forms -->
+<script src="../../js/form.js" type="text/javascript" charset="utf-8" async defer></script>
+<!-- for the calendar -->
 <script type="text/javascript" src="../../js/calendar.js"></script>
