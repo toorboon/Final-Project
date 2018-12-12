@@ -1,5 +1,4 @@
-<?php  
-session_start();
+<?php
 
 include "header.php"; 
 require_once "../../Controllers/CourseController.php";
