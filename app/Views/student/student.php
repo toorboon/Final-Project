@@ -374,7 +374,7 @@ $(document).ready(function(){
 		         });
 
 		} else {
-			console.log('delete')
+			
 			$.ajax({
 				url:"../../Controllers/action_course.php",
 		          method: "post",
