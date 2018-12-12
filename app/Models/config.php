@@ -77,7 +77,7 @@ class Database {
 		}
 		
 		$sql = "INSERT INTO ".$table." (".$fields.") VALUES (".$sql.");";
-
+		//echo $sql;
 		$res = $this->connection->query($sql);
 		$last_id = $this->connection->insert_id;
 		mysqli_close($this->connection);
@@ -94,6 +94,7 @@ class Database {
  			$sql .= $key . "='" . $value . "'";
  		}
 		$sql="DELETE FROM ".$table." WHERE ".$sql;
+		// echo $sql;
 		$result = $this->connection->query($sql);
 		mysqli_close($this->connection);
 	}

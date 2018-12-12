@@ -171,7 +171,11 @@ $(document).ready(function(){
 
             {
               // $('#modal_course').modal('toggle');
-              alert('Insert data is done!'+ data);
+              if (data == '0'){
+                alert('Something went wrong!')
+              } else {
+              alert('Insert data is done!');
+              }
             }
         });
 	}

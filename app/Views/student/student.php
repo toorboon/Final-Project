@@ -234,7 +234,7 @@ require_once "../../Controllers/CourseController.php";
 		
 	</div>
 
-	<div class="row">
+	<div  class="row d-none hide">
 		<div class="col-md-5 col-sm-12 profile m-3">
 			<p class="p-2">
 			<?php 
@@ -251,30 +251,9 @@ require_once "../../Controllers/CourseController.php";
 				<p id='github_name'>GitHub Name: </p>		
 		</div>
 
-		<div class="col-md-5 col-sm-12 profile m-3">
+		<div class="col-md-5 col-sm-12 profile m-3" id="exercises">
 
-			<h4 class="mt-2">Exercises</h4>
-
-			<?php 
-			$table = 'course_exercises ce';
-			$fields = 'et.option_label as type, task_name, short_description';
-			$join = 'INNER JOIN exercise_type et ON ce.exercise_type_id = et.id';
-			$where = 'WHERE course_day_id = 1';
-			$orderby = 'ORDER BY ce.order_nr';
-				$result = $obj->read($table, $fields, $join, $where);
-
-				foreach($result as $value) { 
-					$test = (isset($test)) ? $test : '';
-					if ($test != $value['type']){ ?>
-					<p class="mt-2">Type: <?php echo $test = $value['type']; ?></p> <?php } ?>
-					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-					  <label class="form-check-label" for="defaultCheck1">
-					    <?php echo $value['task_name'] ?>
-					  </label>
-					  <p>Description: <?php echo $value['short_description'] ?></p>
-					</div>
-				<?php } ?>
+			
 			
 		</div>
 	</div>
@@ -285,6 +264,8 @@ $(document).ready(function(){
 	//change this to php!!!
 	//nachdem auf course day gewählt---> Ajax Abfrae, prüfen, gibt es Paare für diesen Tag? Falls ja, gib mir die Infos dazu (zwei Felder) und drucke es
 
+
+
 	$('#inputGroupCourse').on('change',function(){
 		getCourseday($(this).val());
 		course = $('#inputGroupCourse option:selected').text();
@@ -292,7 +273,8 @@ $(document).ready(function(){
 	});
 
 	$('#inputGroupCourseDay').on('change',function(){
-		
+		$('.hide').removeClass('d-none');
+
 		var course_day = $('#inputGroupCourseDay option:selected').text();
 		$('#tech_name').html('Technology: ' + course_day)
 
@@ -324,10 +306,87 @@ $(document).ready(function(){
           	}
 			$('#pair_partners').html(content);
 			$('#github_name').html('Github: <br>' + course + '-' + courseDay + '-' + user_lnames)
+			pairId = response[0].pair_id;
+			getExercises(pairId, courseDayId);
 			// course+course_day+lname1+lname2
           }//FSWD60 -GIT_DAY 1Waything-Kear-O'Fearguise
 		});
 
+	}
+
+	function getExercises(pairId, courseDayId){
+		$.ajax({
+          url:"../../Controllers/action_course.php",
+          method: "post",
+          data:{'category':'fetch_exercises', 'pairId':pairId, 'courseDayId':courseDayId},
+          dataType:"text",
+          success:function(response)
+	          {
+	          	var response = $.parseJSON(response);
+	          	var type = '';
+	          	var result = '<h4 class="mt-2">Exercises</h4>';
+	          	for (var i = 0; i < response.length; i++) {
+	          		if (type != response[i].type) {
+	          			result += '<p class="mt-2">Type: '+response[i].type+'</p>';
+	          		}
+	          		result += '<div class="form-check">';
+	          		if (response[i].checked > 0) {
+	          			result += '<input checked';
+	          		} else {
+	          		result += '<input'
+	          		}
+	          		result += ' class="form-check-input cb" type="checkbox" value="" id="'+response[i].id+'">';
+	          		result += '<label class="form-check-label" for="'+response[i].id+'">';
+	          		result += response[i].task_name;
+	          		result += '</label>';
+	          		result += '<p>Description: '+response[i].short_description+'</p>';
+	          		result += '</div>';
+	          		type = response[i].type
+	     
+	          	}
+
+	          	$('#exercises').html(result);
+
+	          	$('.cb').change(function(){
+	          		var checked = 0;
+	          		if($(this).is(":checked")){checked=1}
+	          		updatePairExercise(checked,$(this).attr('id'),pairId)
+	          	});
+
+			  }
+		});
+	}
+
+	function updatePairExercise(checked,id,pairId){
+
+		if (checked == 1){
+			
+			$.ajax({
+				url:"../../Controllers/action_course.php",
+		          method: "post",
+		          data:{'category':'insert_pair_exercise', 'pair_id':pairId, 'ce_id': id},
+		          dataType:"text",
+		          success:function(response)
+		          {
+		          	
+		          }
+
+		         });
+
+		} else {
+			console.log('delete')
+			$.ajax({
+				url:"../../Controllers/action_course.php",
+		          method: "post",
+		          data:{'category':'delete_pair_exercise', 'pair_id':pairId, 'ce_id': id},
+		          dataType:"text",
+		          success:function(response)
+		          {
+		          	
+		          }
+
+		         });
+		}
 	}
 
 	function getCourseday(courseId) {
