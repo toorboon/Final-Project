@@ -187,6 +187,10 @@ function fetchPairs($courseDayId, $userId){
 	$where = 'WHERE pair_partner.pair_id = (SELECT pair.id FROM pair INNER JOIN pair_partner ON pair.id = pair_partner.pair_id WHERE pair_partner.user_id = '.$userId.' AND pair.course_day_id = '.$courseDayId.')';
 
 	$temp = $obj -> read('pair_partner', $fields, $join , $where);
+
+	echo json_encode($temp);
+	
+	return true;
 }
 
 function fetchCourseDayPairs($courseDayId){
