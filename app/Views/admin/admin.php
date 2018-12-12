@@ -1,6 +1,4 @@
 <?php  
-ob_start();
-session_start();
 include "header.php"; 
 require_once "../../Controllers/CourseController.php"; 
 
@@ -9,8 +7,6 @@ require_once "../../Controllers/CourseController.php";
        header("Location: ../../index.php");
        exit;
       }
-
-ob_end_flush();
 ?>
 
 	<main role="main" class="col-lg-10 col-md-10 ml-sm-auto px-4">
