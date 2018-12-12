@@ -4,7 +4,12 @@ include('../../Controllers/CourseController.php');
 
 if (isset($_POST['courseId']) && isset($_POST['courseDayId']) && isset($_POST['teamsize'])) {
 	$result = $course->pairGenerator($_POST['teamsize'],$_POST['courseId']);
-
+	if ($result == []) {
+		$result = false;
+		echo json_encode($result);
+		return false;
+		exit;
+	}
 	// save ids to Database
 	$courseDayId = $_POST['courseDayId'];
 	foreach ($result as $value) {
@@ -24,6 +29,9 @@ if (isset($_POST['courseId']) && isset($_POST['courseDayId']) && isset($_POST['t
 	}
 	echo json_encode($result);
 	return true;
-}
+} /*else {
+	echo json_encode('');
+	return false;
+}*/
 
 ?>
