@@ -11,6 +11,11 @@ class Course extends Database {
 		// need input to filter available students from door entry system
 		$availableStudents = $allStudents;
 
+		if (count($availableStudents)==0) {
+			return;
+			exit;
+		}
+
 		$courseDays = $this->getCourseDays($courseId);
 		$CoursePairIds = $this->getCoursePairIds($courseDays);
 
@@ -52,8 +57,6 @@ class Course extends Database {
 		if ($nrOfStudents > 0) {
 			$count = $nrOfStudents;
 			$pairsCount = count($pairs);
-			/*echo 'Nr. of pairs: '.$pairsCount.'<br>';
-			echo 'Nr. of students left: '.$nrOfStudents.'<br>';*/
 
 			for ($i=0; $i < $count ; $i++) { 
 				$j = $i % $pairsCount;
@@ -64,11 +67,6 @@ class Course extends Database {
 
 			}
 		}
-			/*echo '<hr>';
-			echo '<p><u>Pairs</u></p><pre>';
-			print_r($pairs);
-			echo '</pre>';
-			echo '<br>';*/
 
 		//find leader for each pair
 			for ($i=0; $i < count($pairs); $i++) { 
@@ -83,11 +81,6 @@ class Course extends Database {
 					array_unshift($pairs[$i], $value);
 				}
 			}
-
-			/*echo '<p><u>Pairs</u></p><pre>';
-			print_r($pairs);
-			echo '</pre>';
-			echo '<br>';*/
 
 		return $pairs;
 	}
