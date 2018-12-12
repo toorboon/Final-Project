@@ -41,7 +41,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column pt-2">
               <li class="nav-item">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="admin.php">
                   <span data-feather="home"></span>
                   Home<span class="sr-only">(current)</span>
                 </a>
