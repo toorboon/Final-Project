@@ -230,6 +230,15 @@ class Course extends Database {
 		$where = 'WHERE user.user_role_id = 2 AND e.course_id = '.$courseId;
 		return $this->read($table, '*', $join, $where, '');
 	}
+
+	function getCourses ($userId) {
+		$table = 'course c';
+		$fields = 'c.id, c.name';
+		$join = 'INNER JOIN enrollment e
+				 ON c.id = e.course_id';
+		$where = 'WHERE e.user_id = '.$userId;
+		return $this->read($table, $fields, $join, $where, '');
+	}
 }
 
 $course = new Course ();
