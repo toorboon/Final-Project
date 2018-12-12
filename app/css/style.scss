@@ -5,9 +5,32 @@ $animationTime: 0.5s;
 $border-color-default: #eee;
 $border-color-fill: #1E90FF;
 $size: 150px;
+$background-image: url("../img/blue.jpg");
 
 //Create how many steps
 $howManySteps: 20; //this needs to be even. 
+
+#loginPage {
+  background-image: $background-image;
+  height: 800px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+}
+
+.loginForm {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+}
+
+.img-thumbnail {
+  border: none;
+  background-color: transparent;
+}
+
+.inputs {
+  background-color: white;
+}
 
 .progress {
   width: $size;
