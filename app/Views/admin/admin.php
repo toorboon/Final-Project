@@ -1,5 +1,17 @@
-<?php  include "header.php"; 
-require_once "../../Controllers/CourseController.php"; ?>
+<?php  
+ob_start();
+session_start();
+include "header.php"; 
+require_once "../../Controllers/CourseController.php"; 
+
+// if session is not set this will redirect to login page
+      if( !isset($_SESSION['admin']) ) {
+       header("Location: ../../index.php");
+       exit;
+      }
+
+ob_end_flush();
+?>
 
 	<main role="main" class="col-lg-10 col-md-10 ml-sm-auto px-4">
 		<div class="container">
@@ -15,7 +27,7 @@ require_once "../../Controllers/CourseController.php"; ?>
 				<table class="table table-striped">
 				  <thead class="bg-primary">
 				    <tr>
-				      <th scope="col">ID</th>
+				      <th scope="col">Description</th>
 				      <th scope="col">Name</th>
 				      <th scope="col">Email</th>
 				      <th scope="col">GitHub</th>
@@ -27,12 +39,14 @@ require_once "../../Controllers/CourseController.php"; ?>
 				  <tbody>
 				  <?php
 				  $table = 'user';
-				  $result = $obj->read($table);
+				  $join = ' LEFT JOIN user_role 
+				  ON user.user_role_id = user_role.id';
+				  $result = $obj->read($table,"*", $join);
 
 				  foreach ($result as $value) {
 				  ?>
 				    <tr>
-				      <th scope="row"><?php echo $value['id'] ?></th>
+				      <th scope="row"><?php echo $value['description'] ?></th>
 				      <td><?php echo $value['fname']. ' ' .$value['lname'] ?></td>
 				      <td><?php echo $value['email'] ?></td>
 				      <td><?php echo $value['github'] ?></td>
@@ -88,4 +102,7 @@ require_once "../../Controllers/CourseController.php"; ?>
 	</main>
 
 <?php  include "../footer/footer.php"; ?>
+<!-- necessary for the forms -->
+<script src="../../js/form.js" type="text/javascript" charset="utf-8" async defer></script>
+<!-- for the calendar -->
 <script type="text/javascript" src="../../js/calendar.js"></script>

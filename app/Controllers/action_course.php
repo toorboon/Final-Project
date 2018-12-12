@@ -20,8 +20,13 @@ if (isset($_POST['category'])){
 		fetchExerciseTypeData();
 	} else if ($category == 'fetch_user_role'){
 		fetchUserRoleData();
+
 	} else if ($category == 'fetch_pairs'){
 		fetchPairs($_POST['courseDayId'], $_POST['userId']);
+
+	} elseif ($category == 'fetch_course_day_pairs') {
+		fetchCourseDayPairs($_POST['course_day_id']);
+
 	}
 }
 
@@ -174,6 +179,7 @@ function fetchUserRoleData(){
 	return true;
 }
 
+
 function fetchPairs($courseDayId, $userId){
 	GLOBAL $obj;
 	$fields = ['fname', 'lname'];
@@ -181,6 +187,19 @@ function fetchPairs($courseDayId, $userId){
 	$where = 'WHERE pair_partner.pair_id = (SELECT pair.id FROM pair INNER JOIN pair_partner ON pair.id = pair_partner.pair_id WHERE pair_partner.user_id = '.$userId.' AND pair.course_day_id = '.$courseDayId.')';
 
 	$temp = $obj -> read('pair_partner', $fields, $join , $where);
+
+
+function fetchCourseDayPairs($courseDayId){
+	GLOBAL $obj;
+	$table = 'pair_partner';
+	$fields = 'pair_id, user_id, CONCAT(user.fname," ",user.lname) as name';
+	$join = 'INNER JOIN pair
+			 ON pair.id = pair_partner.pair_id
+			 INNER JOIN user
+			 ON user.id = user_id';
+	$where = 'WHERE course_day_id = '.$courseDayId;
+	$temp = $obj -> read($table, $fields, $join, $where);
+
 	
 	echo json_encode($temp);
 	

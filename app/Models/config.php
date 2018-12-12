@@ -77,9 +77,11 @@ class Database {
 		}
 		
 		$sql = "INSERT INTO ".$table." (".$fields.") VALUES (".$sql.");";
+
 		$res = $this->connection->query($sql);
+		$last_id = $this->connection->insert_id;
 		mysqli_close($this->connection);
-		return true;
+		return $last_id;
 	}
 
 	public function delete($table,$condition) {

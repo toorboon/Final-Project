@@ -45,7 +45,7 @@ require_once "../../Controllers/CourseController.php";
 				</div>
 			</div>
 			<div class="col-3">
-				<div class="input-group mb-3">
+				<div class="input-group mb-3 generate d-none">
 				  <div class="input-group-prepend">
 				    <label class="input-group-text" for="inputPairSize">Teamsize</label>
 				  </div>
@@ -56,21 +56,13 @@ require_once "../../Controllers/CourseController.php";
 				  </select>
 				</div>
 			</div>
-
-
-
-
-
-
-				<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
-					 Choose team size
-					<input type="number" min="1" max="1" name="courseId" required> 
-					<button type="submit" class="btn btn-primary btn-lg m-3">Generate pairs</button>
-					<button type="submit" class="btn btn-info btn-sm m-2">Generate again</button>
-					<button type="submit" class="btn btn-info btn-sm m-2">Save</button>
-				</form>
+			<div class="col-12 text-center d-none generate">
+				<button class="btn btn-primary btn-lg m-3" id="generateBtn">Generate pairs</button>
+			</div>
+		</div>
+		<div class="row" id="content"></div>
 				
-			</div>	
+				
 			
 			<?php if(isset($_POST['teamSize'])) {
 				$studentsInfo = $course->getStudentInfos($_POST['courseId']);
@@ -100,8 +92,6 @@ require_once "../../Controllers/CourseController.php";
 				    	} 
 				    } ?>
 				    
-				    <a href="#" class="card-link">Card link</a>
-				    <a href="#" class="card-link">Another link</a>
 				  </div>
 				</div>
 			</div>
@@ -113,7 +103,8 @@ require_once "../../Controllers/CourseController.php";
 	<script>
 
 		function getCourseday(courseId) {
-
+			$('.generate').addClass('d-none');
+			$('#content').html('');
 			$.ajax({
 	          url:"../../Controllers/action_course.php",
 	          method: "post",
@@ -136,12 +127,85 @@ require_once "../../Controllers/CourseController.php";
 			});
 		}
 
+		function getPairs(course_day_id) {
+			$.ajax({
+	          url:"../../Controllers/action_course.php",
+	          method: "post",
+	          data:{'category':'fetch_course_day_pairs', 'course_day_id':course_day_id},
+	          dataType:"text",
+	          success:function(response)
+	          {
+	          	var response = $.parseJSON(response);
+	          	if (response.length == 0) {
+	          		$('.generate').removeClass('d-none');
+	          		$('#content').html('');
+	          	} else {
+	          		var pairId = '';
+					var pairs = [];
+					var count = 1;
+		      		for (var i = 0 ; i < response.length; i++) {
+		      			if (pairId != '' && pairId != response[i].pair_id) {
+		      				count += 1;
+		      			}
+		      			pairId = response[i].pair_id;
+		      			if (pairs[count] == undefined){ pairs[count]=[]}
+		      			pairs[count].push(response[i].name);
+		      		}
+	          		PrintPairs(pairs);
+	          	}
+	          }
+
+			});
+		}
+
+		function PrintPairs(pairs){
+			$('.generate').addClass('d-none');
+				
+      		var content = '';
+      		for (var i = 1; i < pairs.length; i++) {
+      			content+="<div class='col-4'><div class='card m-3' style='width: 18rem;'><div class='card-body'><h5 class='card-title'>Pair "+i+"</h5>";
+      			for (var j = 0; j < pairs[i].length; j++) {
+      				if (j == 0){
+      					content+="<p><b>"+pairs[i][j]+"</b></p>"
+      				} else {
+      					content+="<p>"+pairs[i][j]+"</p>"
+      				}
+      			}
+      			content+="</div></div></div>"
+		}
+		$('#content').html(content);
+      	}
+		
+		function generatePairs(courseId,courseDayId,teamsize) {
+			$.ajax({
+	          url:"../../Controllers/actions/action_pairgenerator.php",
+	          method: "post",
+	          data:{'courseId':courseId, 'courseDayId':courseDayId,'teamsize':teamsize},
+	          dataType:"text",
+	          success:function(response)
+	          {
+	          	var response = $.parseJSON(response);
+	          
+	          	if (response.length == 0) {
+	          		$('.generate').removeClass('d-none');
+	          		$('#content').html('');
+	          	} else {
+	          		getPairs(courseDayId);
+	          	}
+	          }
+			});
+		}
+
 		$('#inputGroupCourse').change(function(){
 			getCourseday($(this).val());
 		})
 		$('#inputGroupCourseDay').change(function(){
-			console.log($(this).val());
+			getPairs($(this).val());
 		})
+		$('#generateBtn').click(function(){
+			generatePairs($('#inputGroupCourse').val(),$('#inputGroupCourseDay').val(),$('#inputPairSize').val());
+		})
+
 	</script>
 
 <?php  include "../footer/footer.php"; ?>

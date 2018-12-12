@@ -1,6 +1,17 @@
+
 <?php  include "header.php"; 
+
 	session_start();
-require_once "../../Controllers/CourseController.php"; ?>
+	
+	require_once "../../Controllers/CourseController.php"; 
+
+// if session is not set this will redirect to login page
+      if( !isset($_SESSION['student']) ) {
+       header("Location: ../../index.php");
+       exit;
+      }
+?>
+
 
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 

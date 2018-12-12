@@ -7,7 +7,8 @@
     <link rel="icon" href="../../../../favicon.ico">
 
     <title>Project 3</title>
-
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -20,7 +21,7 @@
       <input class="form-control form-control-dark w-50 m-2" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="../login/actions/a_logout.php?logout">Sign out</a>
+          <a class="nav-link" href="../login/a_logout.php?logout">Sign out</a>
         </li>
       </ul>
     </nav>
@@ -31,7 +32,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column pt-2">
               <li class="nav-item">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="trainer.php">
                   <span data-feather="users"></span>
                   Pair room<span class="sr-only">(current)</span>
                 </a>
