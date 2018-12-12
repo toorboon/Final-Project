@@ -1,5 +1,17 @@
-<?php  include "header.php"; 
-require_once "../../Controllers/CourseController.php"; ?>
+<?php  
+ob_start();
+session_start();
+include "header.php"; 
+require_once "../../Controllers/CourseController.php"; 
+
+// if session is not set this will redirect to login page
+      if( !isset($_SESSION['admin']) ) {
+       header("Location: ../../index.php");
+       exit;
+      }
+
+ob_end_flush();
+?>
 
 	<main role="main" class="col-lg-10 col-md-10 ml-sm-auto px-4">
 		<div class="container">
