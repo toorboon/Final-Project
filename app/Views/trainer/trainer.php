@@ -9,8 +9,6 @@ require_once "../../Controllers/CourseController.php";
        header("Location: ../../index.php");
        exit;
       }
-
-ob_end_flush();
 ?>
 
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -25,8 +23,8 @@ ob_end_flush();
 			</div>
 			
 			<?php  
-			// Get all courses where trainer with ID = 32 is enrolled
-			$courses = $course->getCourses(32);
+			// Get all courses where trainer with ID = xy is enrolled
+			$courses = $course->getCourses($_SESSION['trainer']);
 			?>
 
 			<div class="col-3">
