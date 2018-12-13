@@ -73,6 +73,10 @@ $('#content').html(content);
 	}
 
 function generatePairs(courseId,courseDayId,teamsize) {
+      if (generate == 1) {
+            return
+      }
+      generate = 1;
 	$.ajax({
       url:"../../Controllers/actions/action_pairgenerator.php",
       method: "post",
@@ -84,8 +88,10 @@ function generatePairs(courseId,courseDayId,teamsize) {
       	if (response == false) {
       		$('.generate').removeClass('d-none');
       		$('#content').html('<p class="alert alert-danger text-center m-auto mt-3">There are no students available</p>');
+                  generate = 0;
       	} else {
       		getPairs(courseDayId);
+                  generate = 0;
       	}
       }
 	});
@@ -100,3 +106,6 @@ $('#inputGroupCourseDay').change(function(){
 $('#generateBtn').click(function(){
 	generatePairs($('#inputGroupCourse').val(),$('#inputGroupCourseDay').val(),$('#inputPairSize').val());
 })
+
+// Set variable to prevent to generating Pairs more than one time 
+var generate = 0;
