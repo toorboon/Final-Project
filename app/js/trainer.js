@@ -96,10 +96,91 @@ function getStudents(courseId) {
 }
 
 function getPairRoom(studentId,courseDayId) {
-      console.log(studentId+' '+courseDayId);
+      course = $('#inputGroupCourse option:selected').text();
+      courseDay = $('#inputGroupCourseDay option:selected').text();
+      $('#tech_name').html('Technology: ' + courseDay);
+
+      getPair(courseDayId,studentId, courseDay, course);
+      $('.hide').removeClass('d-none');
+
 }
 
+function getPair(courseDayId, userId, courseDay, course){
+            $('#github_name').removeClass('alert, alert-success')
+            $.ajax({
+            url:"../../Controllers/action_course.php",
+                method: "post",
+                data:{'category':'fetch_pairs', 'courseDayId':courseDayId, 'userId': userId},
+                dataType:"text",
+                success:function(response)
+                {
+                  var response = $.parseJSON(response);
+                  content = '';
+                  user_lnames = '';
 
+                  for (var i = 0; i< response.length; i++){
+                        if (i == 0){
+                              content += '<p><b>' + response[i].fname +' ' + response[i].lname + '</b></p>';
+                              user_lnames += response[i].lname;
+                              var github = response[i].github;
+                        } else {
+                        content += '<p>' + response[i].fname +' ' + response[i].lname + '</p>';
+                        user_lnames += '-' + response[i].lname;
+                        }
+                  }
+                        $('#pair_partners').html(content);
+                        var reponame = course + '-' + courseDay + '-' + user_lnames;
+                        var reponame = reponame.replace(/ /gi, "-");
+                        var reponame = reponame.replace(/'/gi, "-");
+                        $('#github_name').html('Github: <br><a href="https://github.com/'+github+'/'+reponame+'" target="_blanc">' + reponame +'</a>')
+                        pairId = response[0].pair_id;
+                        getExercises(pairId, courseDayId);
+                        var test = 'https://api.github.com/repos/'+github+'/'+reponame;
+                        $.getJSON(test, function(data){
+                              if(data['owner'].login == github)$('#github_name').addClass('alert, alert-success');
+                              });
+
+                }
+                  });
+
+}
+
+function getExercises(pairId, courseDayId){
+      $.ajax({
+      url:"../../Controllers/action_course.php",
+      method: "post",
+      data:{'category':'fetch_exercises', 'pairId':pairId, 'courseDayId':courseDayId},
+      dataType:"text",
+      success:function(response)
+          {
+            var response = $.parseJSON(response);
+            var type = '';
+            var result = '<h4 class="mt-2">Exercises</h4>';
+            for (var i = 0; i < response.length; i++) {
+                  if (type != response[i].type) {
+                        result += '<h5>'+response[i].type+'</h5>';
+                  }
+                  result += '<div class="form-check">';
+                  if (response[i].checked > 0) {
+                        result += '<input checked';
+                  } else {
+                  result += '<input'
+                  }
+                  result += ' disabled="disabled" class="form-check-input cb" type="checkbox" value="" id="'+response[i].id+'">';
+                  result += '<label class="form-check-label" for="'+response[i].id+'">';
+                  result += response[i].task_name;
+                  result += '</label>';
+                  result += '<p class="small">'+response[i].short_description+'</p>';
+                  result += '</div>';
+                  type = response[i].type
+     
+            }
+
+            $('#exercises').html(result);
+
+              }
+      });
+}
 
 function generatePairs(courseId,courseDayId,teamsize) {
       if (generate == 1) {

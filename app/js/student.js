@@ -69,7 +69,7 @@ $(document).ready(function(){
 	          	var result = '<h4 class="mt-2">Exercises</h4>';
 	          	for (var i = 0; i < response.length; i++) {
 	          		if (type != response[i].type) {
-	          			result += '<p class="mt-2">Type: '+response[i].type+'</p>';
+	          			result += '<h5>Type: '+response[i].type+'</h5>';
 	          		}
 	          		result += '<div class="form-check">';
 	          		if (response[i].checked > 0) {
@@ -81,7 +81,7 @@ $(document).ready(function(){
 	          		result += '<label class="form-check-label" for="'+response[i].id+'">';
 	          		result += response[i].task_name;
 	          		result += '</label>';
-	          		result += '<p>Description: '+response[i].short_description+'</p>';
+	          		result += '<p class="small">'+response[i].short_description+'</p>';
 	          		result += '</div>';
 	          		type = response[i].type
 	     

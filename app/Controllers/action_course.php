@@ -34,6 +34,8 @@ if (isset($_POST['category'])){
 		deletePairExercise();
 	} elseif ($category == 'fetch_students'){
 		fetchStudents($_POST['course_id']);
+	} elseif ($category == 'fetch_pair_room'){
+		fetchPairRoom($_POST['studentId'],$_POST['courseDayId']);
 	}
 	 
 }
@@ -209,7 +211,7 @@ function fetchUserRoleData(){
 
 function fetchPairs($courseDayId, $userId){
 	GLOBAL $obj;
-	$fields = ['fname', 'lname', 'pair_partner.pair_id'];
+	$fields = ['fname', 'lname', 'pair_partner.pair_id','github'];
 	$join = 'INNER JOIN user ON user.id = pair_partner.user_id';
 	$where = 'WHERE pair_partner.pair_id = (SELECT pair.id FROM pair INNER JOIN pair_partner ON pair.id = pair_partner.pair_id WHERE pair_partner.user_id = '.$userId.' AND pair.course_day_id = '.$courseDayId.')';
 

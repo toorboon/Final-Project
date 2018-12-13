@@ -61,7 +61,29 @@ require_once "../../Controllers/CourseController.php";
 			</div>
 			
 		</div>
-		
+		<div  class="row d-none hide">
+		<div class="col-md-5 col-sm-12 profile m-3">
+			<p class="p-2">
+			<?php 
+			echo "<strong>" . date("l") . ", ";
+			echo date("d-m-Y") . "</strong><hr>";
+			?>	
+			</p>
+
+				<p id="tech_name">Technology:</p>
+				
+				<p>Pair partner: 
+					<div id="pair_partners"></div>
+				</p>
+				<p id='github_name'>GitHub Name: </p>		
+		</div>
+
+		<div class="col-md-5 col-sm-12 profile m-3" id="exercises">
+
+			
+			
+		</div>
+	</div>
 
 	</main>
 	

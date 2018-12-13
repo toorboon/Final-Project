@@ -40,7 +40,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="history.php">
                   <span data-feather="calendar"></span>
                   History
                 </a>
