@@ -25,7 +25,7 @@
         
         <div class="form-group">
           <label>Start Date</label>
-          <input class="form-control" type="date" name="start_date" placeholder="Start Date" value="2017-01-03">
+          <input class="form-control" type="date" name="start_date" placeholder="Start Date" value="2019-01-03">
         </div>
         
         <div class="form-group">
