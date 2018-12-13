@@ -41,12 +41,12 @@
 
         <div class="form-group">
           <label>Task Name</label>
-          <input class="form-control" type="text" name="task_name" placeholder="Name of the task" value="Do something idiot!">
+          <input class="form-control" type="text" name="task_name" placeholder="Name of the task" value="Do something!">
         </div>
         
         <div class="form-group">
           <label>Short Description</label>
-          <input class="form-control" type="text" name="short_description" placeholder="Short Description" value="I am some description!">
+          <input class="form-control" type="text" name="short_description" placeholder="Short Description" value="I am descriptive!">
         </div>
 
         <div class="d-flex justify-content-center btn-group">

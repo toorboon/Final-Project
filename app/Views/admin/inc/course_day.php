@@ -34,9 +34,24 @@
           <label>Technology</label>
           <select class="custom-select form-control" name="technology" required>
               <option value="" selected disabled>Choose Technology</option>
+              <option value="Github">Github</option>
               <option value="HTML">HTML</option>
               <option value="CSS">CSS</option>
+              <option value="Algorithms">Algorithms</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="JavaScript">Jasmine</option>
               <option value="jQuery">jQuery</option>
+              <option value="Bootstrap 4">Bootstrap 4</option>
+              <option value="TypeScript">TypeScript</option>
+              <option value="Angular">Angular</option>
+              <option value="Database Design">Database Design</option>
+              <option value="MySQL">MySQL</option>
+              <option value="PHP">PHP</option>
+              <option value="AJAX">AJAX</option>
+              <option value="AJAX">API</option>
+              <option value="Wordpress">Wordpress</option>
+              <option value="Symfony">Symfony</option>
+              <option value="SCRUM">SCRUM</option>
           </select>
         </div>
 
