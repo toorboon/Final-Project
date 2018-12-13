@@ -40,13 +40,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="history.php">
+                <a class="nav-link" href="#">
                   <span data-feather="calendar"></span>
                   History
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="profile.php">
+                <a class="nav-link active" href="#">
                   <span data-feather="home"></span>
                   Profile
                 </a>

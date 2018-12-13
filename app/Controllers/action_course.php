@@ -239,9 +239,11 @@ function fetchExercises($pairId, $courseDayId){
 	GLOBAL $obj;
 	$table = 'course_exercises ce';
 	$fields = 'et.option_label as type, task_name, short_description, ce.id, count(peh.id) as checked';
-	$join = 'INNER JOIN exercise_type et ON ce.exercise_type_id = et.id 
+	$join = 'INNER JOIN exercise_type et 
+			 ON ce.exercise_type_id = et.id 
 			 LEFT JOIN pair_exercises_history peh
-			 ON peh.course_exercise_id = ce.id';
+			 ON peh.course_exercise_id = ce.id
+			 AND pair_id = '.$pairId;
 	$where = 'WHERE course_day_id = '.$courseDayId.' GROUP BY ce.id';
 	$orderby = 'ORDER BY ce.exercise_type_id asc, ce.order_nr, ce.id asc';
 	$temp = $obj->read($table, $fields, $join, $where, $orderby);

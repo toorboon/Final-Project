@@ -37,7 +37,7 @@ if( isset($_POST['btn-login']) ) {
     $condition = "WHERE email = '".$email."'";
     $row = $obj->read($table,$fields='*',$condition);
   
-  // $password = hash('sha256', $pass); // password hashing
+  $password = hash('sha256', $pass); // password hashing
   // It doesn't work with existing passwords in database because they weren't created with hashing
 
   // if uname/pass is correct it returns must be 1 row
