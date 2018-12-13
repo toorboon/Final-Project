@@ -32,6 +32,8 @@ if (isset($_POST['category'])){
 		insertPairExercise();
 	} elseif ($category == 'delete_pair_exercise'){
 		deletePairExercise();
+	} elseif ($category == 'fetch_students'){
+		fetchStudents($_POST['course_id']);
 	}
 	 
 }
@@ -248,6 +250,20 @@ function fetchExercises($pairId, $courseDayId){
 	$orderby = 'ORDER BY ce.exercise_type_id asc, ce.order_nr, ce.id asc';
 	$temp = $obj->read($table, $fields, $join, $where, $orderby);
 
+	echo json_encode($temp);
+	
+	return true;
+}
+
+function fetchStudents($courseId){
+	GLOBAL $obj;
+	$table = 'user u';
+	$fields = 'u.id, concat(fname," ",lname) as name';
+	$join = 'join enrollment e
+			 on e.user_id = u.id';
+	$where = 'WHERE u.user_role_id = 2 AND e.course_id = '.$courseId;
+	$orderby = 'ORDER BY name';
+	$temp = $obj -> read($table, $fields, $join, $where,$orderby);
 	echo json_encode($temp);
 	
 	return true;

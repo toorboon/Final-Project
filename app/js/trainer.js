@@ -72,6 +72,35 @@ function PrintPairs(pairs){
 $('#content').html(content);
 	}
 
+function getStudents(courseId) {
+      $.ajax({
+      url:"../../Controllers/action_course.php",
+      method: "post",
+      data:{'category':'fetch_students', 'course_id':courseId},
+      dataType:"text",
+      success:function(response)
+      {
+            $('#inputGroupStudent').html('<option value="" selected disabled>Choose...</option>');
+
+            var response = $.parseJSON(response);
+            
+            for(var i=0; i< response.length;i++){
+            // creates option tag
+                        $('<option/>', {
+                  html: response[i].name,
+                  value: response[i].id
+            }).appendTo('#inputGroupStudent'); //appends to select if parent div has id dropdown
+            }
+      }
+      });
+}
+
+function getPairRoom(studentId,courseDayId) {
+      console.log(studentId+' '+courseDayId);
+}
+
+
+
 function generatePairs(courseId,courseDayId,teamsize) {
       if (generate == 1) {
             return
@@ -102,9 +131,13 @@ $('#inputGroupCourse').change(function(){
 })
 $('#inputGroupCourseDay').change(function(){
 	getPairs($(this).val());
+      getStudents($('#inputGroupCourse').val());
 })
 $('#generateBtn').click(function(){
 	generatePairs($('#inputGroupCourse').val(),$('#inputGroupCourseDay').val(),$('#inputPairSize').val());
+})
+$('#inputGroupStudent').change(function(){
+      getPairRoom($(this).val(),$('#inputGroupCourseDay').val());
 })
 
 // Set variable to prevent to generating Pairs more than one time 
