@@ -19,7 +19,7 @@
   <body>
     <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
       <?php 
-        echo "<p class='m-3 text-white'>Welcome " .$_SESSION['name']. " !</p>"; 
+        echo "<p id='welcome_user' class='m-3 text-white' data-user-id='".$_SESSION['student']."'>Welcome " .$_SESSION['name']. " !</p>"; 
       ?>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
