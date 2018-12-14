@@ -1,0 +1,55 @@
+Andras
+- PM, Team-Lead, massage therapist
+
+Mario
+- Backend focus programmer
+
+Luisa (frontend badge)
+- Would like to work on backend stuff but is probably better in Frontend
+
+Marco
+- whatever is needed
+
+requirements first points and questions:
+- It needs to be awesome!!!
+
+?- if a student takes more than one course, do we need to have separate student ids or keep track on the students?
+--> this app is for the FSWD course (optional for all the other courses --> one id for multiple courses!)
+    --> track all courses with one student id
+
+?- where do we get the data for the daily exercises from?
+--> the data must be inserted with insert form (see drawing from Mario) --> only for FSWD course
+
+?- API to door-entry system
+--> At the moment just use a JSON file with id for the students (Goran provides the structure)
+
+?- How many pages do you request as minimum for the SLPT
+--> History for every date: date, technology, pair partners, github-url (they click on the date, then they see the pair room for that day); lock the exercises after 4 o'clock
+--> trainerpages: sees all the pairs in a list with indicators SHOULD (green--> repo created, red--> no repo created, number of pushes for every pair + link to the repo) NICE TO HAVE --> number of exercises done for that day, NICE TO HAVE --> sorting --> + click on the card leads to the pair page details
+--> Profilepage: 
+--> studentspage:
+--> course overview: is the trainer overview
+
+?- How about the design (Luisa will show the dashboard screenshot)
+--> Design is up to the team
+
+?- How is progress tracking defined? --> this view is the samee for all the students as well as the trainers
+--> exercises, make a score: different levels (basic, intermediate, advanced, challenge) for the exercises --> just bars (for one tech, one bar), where you see the progress, no additional information
+
+?- How are the repositories of the students in SLPT showing up?
+--> The repos will be created by the students and put there
+    ?- Are we creating it? How are we identifying it?
+--> the admin is doing that and he is just putting the Github account, NOT the repository!
+
+?- Is the admin page just putting students and deleting them with there respective information (automatic / manual)
+--> Admin update profiles with all information (github links, student-information and more)
+
+?- pairroom problem (is that an overview about all the users or just the pair?)
+--> pair room is a room of ONE pair and they should see the repo the exercises and the partner
+--> pair room page should have an animation after you click on the "pair up" button
+--> if somebody show up later there should be an option to pair him up later (AJAX Call to add them to an existing group? OPTIONAL)
+--> NICE TO HAVE for the students to see in the pair room, if the repo is created
+
+New Naming convention for the course: FSWD50-{technology}-{day}-{name}
+
+Advice from Goran --> Make your own MVC in plain PHP, JavaScript
